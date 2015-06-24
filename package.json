@@ -1,0 +1,30 @@
+{
+  "name": "generator-formidable-react-component",
+  "version": "0.0.0",
+  "description": "Yeoman generator",
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "boygirl/generator-formidable-react-component",
+  "author": {
+    "name": "Lauren",
+    "email": "",
+    "url": "https://github.com/boygirl"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "lodash": "^3.9.2",
+    "yeoman-generator": "^0.20.1"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
+}

@@ -3,8 +3,8 @@
 import React from 'react/addons';
 
 const <%= componentName %> = React.createClass({
-  render () {
-    return <div><%= projectName %></div>;
+  render() {
+    return <div>The component <%= componentName %> should render here.</div>;
   }
 });
 

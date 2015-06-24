@@ -14,24 +14,22 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
 
     var prompts = [{
       type: 'input',
-      name: 'componentName',
-      message: 'Please choose a PascalCase component name',
-    }, {
-      type: 'input',
-      name: 'projectName',
-      message: 'Please choose a kebab-case project name (this will be your directory name, and git repo name)',
+      name: 'inputName',
+      message: 'Please name your component',
     }, {
       type: 'input',
       name: 'author',
       message: 'Please enter an author name'
-    },
+    }, {
       type: 'input',
       name: 'ghUser',
-      message: 'What github username should this package be published to?',
+      message: 'What github username / organization should this package be published under?',
     },];
 
     this.prompt(prompts, function (props) {
       _.extend(this, props);
+      this.componentName = _.capitalize(_.camelCase(this.inputName));
+      this.projectName = _.kebabCase(_.deburr(this.inputName))
       done();
     }.bind(this));
   },
@@ -48,16 +46,16 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
     this.copy('eslintrc', '.eslintrc');
     this.copy('gitignore', '.gitignore');
     this.copy('_Gulpfile.js', 'Gulpfile.js');
-    this.copy('_README.md', 'README.md');
     this.copy('_karma.config.js', 'karma.config.js');
     this.copy('_webpack.config.js', 'webpack.config.js');
     this.copy('test/helpers/_phantomjs-shims.js', 'test/helpers/phantomjs-shims.js');
     this.copy('test/helpers/_raf-polyfill.js', 'test/helpers/raf-polyfill.js');
     this.copy('demo/_index.html', 'demo/index.html');
     this.template('_package.json', 'package.json');
-    this.template('src/_component.js', 'src/' + this.componentName + '.js');
+    this.template('src/_component.js', 'src/' + this.projectName + '.js');
     this.template('_index.js', 'index.js');
     this.template('demo/_app.js', 'demo/app.js');
+    this.template('_README.md', 'README.md');
   },
 
   install: function() {

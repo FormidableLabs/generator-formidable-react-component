@@ -10,11 +10,14 @@
     "email": "",
     "url": "https://github.com/boygirl"
   },
+  "engines": {
+    "node": ">=0.10.0"
+  },
   "scripts": {
     "test": "mocha"
   },
   "files": [
-    "generators"
+    "app"
   ],
   "keywords": [
     "yeoman-generator"
@@ -26,5 +29,8 @@
   },
   "devDependencies": {
     "mocha": "*"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
   }
 }

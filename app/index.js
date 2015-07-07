@@ -29,17 +29,18 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       _.extend(this, props);
       this.componentName = _.capitalize(_.camelCase(this.inputName));
-      this.projectName = _.kebabCase(_.deburr(this.inputName))
+      this.projectName = _.kebabCase(_.deburr(this.inputName));
+      this.destinationRoot(this.projectName);
       done();
     }.bind(this));
   },
 
   scaffoldFolders: function(){
-    this.mkdir("demo");
-    this.mkdir("src");
-    this.mkdir("test");
-    this.mkdir("test/spec");
-    this.mkdir("test/helpers");
+    this.mkdir('demo');
+    this.mkdir('src');
+    this.mkdir('test');
+    this.mkdir('test/spec');
+    this.mkdir('test/helpers');
   },
 
   copyFiles: function() {

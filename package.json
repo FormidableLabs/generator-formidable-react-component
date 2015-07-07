@@ -4,11 +4,11 @@
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "boygirl/generator-formidable-react-component",
+  "repository": "formidablelabs/generator-formidable-react-component",
   "author": {
-    "name": "Lauren",
-    "email": "",
-    "url": "https://github.com/boygirl"
+    "name": "Lauren Eastridge",
+    "email": "lauren.eastridge@formidablelabs.com",
+    "url": "https://github.com/formidablelabs"
   },
   "engines": {
     "node": ">=0.10.0"

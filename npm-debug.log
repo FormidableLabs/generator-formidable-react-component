@@ -1,0 +1,73 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/boygirl/.nvm/v0.10.36/bin/node',
+1 verbose cli   '/Users/boygirl/.nvm/v0.10.36/bin/npm',
+1 verbose cli   'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.36
+4 verbose readDependencies using package.json deps
+5 verbose install where, deps [ '/Users/boygirl/formidable/d3-react/generator-formidable-react-component',
+5 verbose install   [ 'chalk',
+5 verbose install     'lodash',
+5 verbose install     'yeoman-generator',
+5 verbose install     'formidible-react-component-boilerplate',
+5 verbose install     'mocha' ] ]
+6 info preinstall generator-formidable-react-component@0.1.1
+7 verbose readDependencies using package.json deps
+8 verbose already installed skipping chalk@^1.0.0 /Users/boygirl/formidable/d3-react/generator-formidable-react-component
+9 verbose already installed skipping lodash@^3.9.2 /Users/boygirl/formidable/d3-react/generator-formidable-react-component
+10 verbose already installed skipping yeoman-generator@^0.20.1 /Users/boygirl/formidable/d3-react/generator-formidable-react-component
+11 verbose cache add [ 'formidible-react-component-boilerplate@https://github.com/formidablelabs/formidible-react-component-boilerplate.git',
+11 verbose cache add   null ]
+12 verbose cache add name=undefined spec="formidible-react-component-boilerplate@https://github.com/formidablelabs/formidible-react-component-boilerplate.git" args=["formidible-react-component-boilerplate@https://github.com/formidablelabs/formidible-react-component-boilerplate.git",null]
+13 verbose parsed url { protocol: null,
+13 verbose parsed url   slashes: null,
+13 verbose parsed url   auth: null,
+13 verbose parsed url   host: null,
+13 verbose parsed url   port: null,
+13 verbose parsed url   hostname: null,
+13 verbose parsed url   hash: null,
+13 verbose parsed url   search: null,
+13 verbose parsed url   query: null,
+13 verbose parsed url   pathname: 'formidible-react-component-boilerplate@https://github.com/formidablelabs/formidible-react-component-boilerplate.git',
+13 verbose parsed url   path: 'formidible-react-component-boilerplate@https://github.com/formidablelabs/formidible-react-component-boilerplate.git',
+13 verbose parsed url   href: 'formidible-react-component-boilerplate@https://github.com/formidablelabs/formidible-react-component-boilerplate.git' }
+14 verbose already installed skipping mocha@* /Users/boygirl/formidable/d3-react/generator-formidable-react-component
+15 verbose cache add name="formidible-react-component-boilerplate" spec="https://github.com/formidablelabs/formidible-react-component-boilerplate.git" args=["formidible-react-component-boilerplate","https://github.com/formidablelabs/formidible-react-component-boilerplate.git"]
+16 verbose parsed url { protocol: 'https:',
+16 verbose parsed url   slashes: true,
+16 verbose parsed url   auth: null,
+16 verbose parsed url   host: 'github.com',
+16 verbose parsed url   port: null,
+16 verbose parsed url   hostname: 'github.com',
+16 verbose parsed url   hash: null,
+16 verbose parsed url   search: null,
+16 verbose parsed url   query: null,
+16 verbose parsed url   pathname: '/formidablelabs/formidible-react-component-boilerplate.git',
+16 verbose parsed url   path: '/formidablelabs/formidible-react-component-boilerplate.git',
+16 verbose parsed url   href: 'https://github.com/formidablelabs/formidible-react-component-boilerplate.git' }
+17 silly lockFile e3149563--react-component-boilerplate-git https://github.com/formidablelabs/formidible-react-component-boilerplate.git
+18 verbose lock https://github.com/formidablelabs/formidible-react-component-boilerplate.git /Users/boygirl/.npm/e3149563--react-component-boilerplate-git.lock
+19 verbose addRemoteTarball [ 'https://github.com/formidablelabs/formidible-react-component-boilerplate.git',
+19 verbose addRemoteTarball   null ]
+20 info retry fetch attempt 1 at 14:00:08
+21 verbose fetch to= /var/folders/pq/58m96sxn0717n8c2y03q70mc0000gp/T/npm-88182-CNmYr7PP/github.com/formidablelabs/formidible-react-component-boilerplate.git
+22 http GET https://github.com/formidablelabs/formidible-react-component-boilerplate.git
+23 http 404 https://github.com/formidablelabs/formidible-react-component-boilerplate.git
+24 error fetch failed https://github.com/formidablelabs/formidible-react-component-boilerplate.git
+25 silly lockFile e3149563--react-component-boilerplate-git https://github.com/formidablelabs/formidible-react-component-boilerplate.git
+26 silly lockFile e3149563--react-component-boilerplate-git https://github.com/formidablelabs/formidible-react-component-boilerplate.git
+27 error Error: 404 Not Found
+27 error     at WriteStream.<anonymous> (/Users/boygirl/.nvm/v0.10.36/lib/node_modules/npm/lib/utils/fetch.js:58:12)
+27 error     at WriteStream.emit (events.js:117:20)
+27 error     at evalmachine.<anonymous>:1610:14
+27 error     at /Users/boygirl/.nvm/v0.10.36/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:102:5
+27 error     at Object.oncomplete (evalmachine.<anonymous>:108:15)
+28 error If you need help, you may report this *entire* log,
+28 error including the npm and node versions, at:
+28 error     <http://github.com/npm/npm/issues>
+29 error System Darwin 14.1.0
+30 error command "/Users/boygirl/.nvm/v0.10.36/bin/node" "/Users/boygirl/.nvm/v0.10.36/bin/npm" "install"
+31 error cwd /Users/boygirl/formidable/d3-react/generator-formidable-react-component
+32 error node -v v0.10.36
+33 error npm -v 1.4.28
+34 verbose exit [ 1, true ]

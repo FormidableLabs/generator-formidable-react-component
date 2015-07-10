@@ -1,6 +1,6 @@
 # generator-formidable-react-component 
 
-This generator creates a react component scaffold with webpack.  Linting, testing with Karma, and a minimal demo runner are included.  This scaffold is heavily influenced by [react-shuffle](https://github.com/FormidableLabs/react-shuffle)
+This generator creates a react component from Formidable Labs freshest [react component boilerplate](https://github.com/FormidableLabs/formidable-react-component-boilerplate)
 
 To install generator-formidable-react-component from npm, run:
 
@@ -8,7 +8,7 @@ To install generator-formidable-react-component from npm, run:
 npm install -g generator-formidable-react-component
 ```
 
-Finally, initiate the generator from a fresh directory:
+To run the generator:
 
 ```bash
 yo formidable-react-component

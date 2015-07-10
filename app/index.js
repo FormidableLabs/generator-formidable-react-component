@@ -39,12 +39,16 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
   },
 
   getBoilerplate: function () {
+    var done = this.async();
     this.remote(
       'formidablelabs',
       'formidable-react-component-boilerplate',
+      'master',
       function (err, remote) {
         remote.directory('.', '.');
-      }.bind(this)
+        done();
+      },
+      true // removes the cached data so boilerplate is always up to date.
     );
   },
 

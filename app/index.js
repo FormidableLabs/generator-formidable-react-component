@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var chalk = require('chalk');
 var yeoman = require('yeoman-generator');
+var beautify = require('js-beautify');
 
 var ReactComponentGenerator = yeoman.generators.Base.extend({
 
@@ -30,33 +31,36 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       _.extend(this, props);
       this.componentName = _.capitalize(_.camelCase(this.inputName));
       this.projectName = _.kebabCase(_.deburr(this.inputName));
+      this.repo = _.kebabCase(_.deburr(this.ghUser));
+      this.git = 'https://github.com/' + this.repo + '/' + this.projectName;
       this.destinationRoot(this.projectName);
       done();
     }.bind(this));
   },
 
-  scaffoldFolders: function(){
-    this.mkdir('demo');
-    this.mkdir('src');
-    this.mkdir('test');
-    this.mkdir('test/spec');
-    this.mkdir('test/helpers');
+  getBoilerplate: function () {
+    var done = this.async();
+    this.remote(
+      'formidablelabs',
+      'formidable-react-component-boilerplate',
+      'master',
+      function (err, remote) {
+        remote.directory('.', '.');
+        done();
+      },
+      true // removes the cached data so boilerplate is always up to date.
+    );
   },
 
-  copyFiles: function() {
-    this.copy('eslintrc', '.eslintrc');
-    this.copy('gitignore', '.gitignore');
-    this.copy('_Gulpfile.js', 'Gulpfile.js');
-    this.copy('_karma.config.js', 'karma.config.js');
-    this.copy('_webpack.config.js', 'webpack.config.js');
-    this.copy('test/helpers/_phantomjs-shims.js', 'test/helpers/phantomjs-shims.js');
-    this.copy('test/helpers/_raf-polyfill.js', 'test/helpers/raf-polyfill.js');
-    this.copy('demo/_index.html', 'demo/index.html');
-    this.template('_package.json', 'package.json');
-    this.template('src/_component.js', 'src/' + this.projectName + '.js');
-    this.template('_index.js', 'index.js');
-    this.template('demo/_app.js', 'demo/app.js');
-    this.template('_README.md', 'README.md');
+  updateJSON: function () {
+    var jsonFile = JSON.parse(this.read(this.destinationRoot() + '/package.json'));
+    jsonFile.name = this.projectName;
+    jsonFile.repository.url = this.git + '.git';
+    jsonFile.author = this.author;
+    jsonFile.bugs.url = this.git + "/issues";
+    jsonFile.homepage = this.git;
+    var updatedJSON = beautify(JSON.stringify(jsonFile), {indent_size: 2});
+    this.write(this.destinationRoot() + '/package.json', updatedJSON);
   },
 
   install: function() {

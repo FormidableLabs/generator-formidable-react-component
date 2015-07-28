@@ -26,22 +26,6 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       type: 'input',
       name: 'ghUser',
       message: 'What github username / organization should this package be published under?',
-    },
-    {
-      type : 'checkbox',
-        name : 'radium',
-        message : 'Will your component use Radium?',
-        choices : [
-          {
-            name : 'yes',
-            value : true
-          },
-          {
-            name : 'no',
-            value : false,
-            checked: true
-          }
-        ]
     }];
 
     this.prompt(prompts, function (props) {
@@ -51,8 +35,6 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       this.repo = _.kebabCase(_.deburr(this.ghUser));
       this.git = 'https://github.com/' + this.repo + '/' + this.projectName;
       this.destinationRoot(this.projectName);
-      this.boilerplateRepo = this.radium[0] ?
-       'formidable-radium-component-boilerplate':'formidable-react-component-boilerplate';
       done();
     }.bind(this));
   },
@@ -76,6 +58,14 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
   },
 
   end: {
+    removeDist: function () {
+      var done = this.async();
+      console.log("removing built directories");
+      this.spawnCommand("npm", ["run","clean-dist"]).on('exit', function () {
+        done();
+      });
+    },
+
     renameProject: function () {
       var done = this.async();
       console.log("replacing \"boilerplate-component\" with \"" + this.projectName + "\"");
@@ -95,6 +85,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
     },
 
     renameFiles: function () {
+      // TODO find a more robust method
       var done = this.async();
       console.log("renaming src/components/boilerplate-component.jsx to src/components/" + this.projectName + ".jsx");
       var args = [this.destinationRoot() + "/src/components/boilerplate-component.jsx", "./src/components/" + this.projectName + ".jsx"];
@@ -103,17 +94,10 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       });
     },
 
-    removeDist: function () {
-      var done = this.async();
-      console.log("removing built directories");
-      var args = ["-rf", this.destinationRoot() + "/dist"];
-      this.spawnCommand("rm", args).on('exit', function () {
-        done();
-      });
-    },
-
     goodbye: function () {
-      console.log("SUCCESS");
+      this.log(
+        "\n" + chalk.green.underline("SUCCESS");
+      );
     }
   }
 });

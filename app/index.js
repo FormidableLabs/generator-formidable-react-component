@@ -3,8 +3,6 @@
 var _ = require("lodash");
 var chalk = require("chalk");
 var yeoman = require("yeoman-generator");
-var spawn = require("child_process").spawn;
-var replace = require("replace");
 
 var ReactComponentGenerator = yeoman.generators.Base.extend({
 
@@ -70,7 +68,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       var done = this.async();
       console.log("replacing \"boilerplate-component\" with \"" + this.projectName + "\"");
       var args = ["boilerplate-component", this.projectName, "-q"];
-      this.spawnCommand("replace", ["boilerplate-component", this.projectName]).on("exit", function () {
+      this.spawnCommand("replace", args).on("exit", function () {
         done();
       });
     },
@@ -79,7 +77,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       var done = this.async();
       console.log("replacing \"BoilerplateComponent\" with \"" + this.componentName + "\"");
       var args = ["boilerplate-component", this.componentName, "-q"];
-      this.spawnCommand("replace", ["BoilerplateComponent", this.componentName]).on("exit", function () {
+      this.spawnCommand("replace", args).on("exit", function () {
         done();
       });
     },
@@ -96,7 +94,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
 
     goodbye: function () {
       this.log(
-        "\n" + chalk.green.underline("SUCCESS")
+        "\n" + chalk.green.underline("SUCCESS");
       );
     }
   }

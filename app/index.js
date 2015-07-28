@@ -3,8 +3,6 @@
 var _ = require('lodash');
 var chalk = require('chalk');
 var yeoman = require('yeoman-generator');
-var spawn = require('child_process').spawn;
-var replace = require('replace');
 
 var ReactComponentGenerator = yeoman.generators.Base.extend({
 

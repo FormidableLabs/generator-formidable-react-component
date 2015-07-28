@@ -48,7 +48,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       function (err, remote) {
         remote.directory(".", ".");
         done();
-      }.bind(this),
+      },
       true // removes the cached data so boilerplate is always up to date.
     );
   },
@@ -113,7 +113,6 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
         done();
       }.bind(this));
     },
-
 
     uninstallUtilities: function () {
       var done = this.async();

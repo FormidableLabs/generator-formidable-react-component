@@ -25,7 +25,9 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "lodash": "^3.9.2",
-    "yeoman-generator": "^0.20.1"
+    "yeoman-generator": "^0.20.1",
+    "replace": "0.3.0",
+    "js-beautify": "1.5.10"
   },
   "devDependencies": {
     "mocha": "*"

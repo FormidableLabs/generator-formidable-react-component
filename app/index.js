@@ -24,6 +24,20 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       type: "input",
       name: "ghUser",
       message: "What github username / organization should this package be published under?",
+    }, {
+      type : "list",
+        name : "radium",
+        message : "Will your component use Radium?",
+        choices : [
+          {
+            name : "yes",
+            value : true
+          },
+          {
+            name : "no",
+            value : false
+          }
+        ]
     }];
 
     this.prompt(prompts, function (props) {
@@ -33,6 +47,8 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       this.repo = _.kebabCase(_.deburr(this.ghUser));
       this.git = "https://github.com/" + this.repo + "/" + this.projectName;
       this.destinationRoot(this.projectName);
+      this.boilerplateRepo = this.radium ?
+       "formidable-radium-component-boilerplate" : "formidable-react-component-boilerplate";
       done();
     }.bind(this));
   },
@@ -43,7 +59,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
     this.log("\n" + chalk.cyan(msg));
     this.remote(
       "formidablelabs",
-      "formidable-react-component-boilerplate",
+      this.boilerplateRepo,
       "master",
       function (err, remote) {
         remote.directory(".", ".");

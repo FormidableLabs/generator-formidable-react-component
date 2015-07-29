@@ -92,8 +92,8 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
               this.destinationRoot() +
               "/src/components/boilerplate-component.jsx")
             );
-            done();
           }
+          done();
         }.bind(this)
       );
     },
@@ -110,8 +110,8 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
             this.log("\n" + chalk.red(this.destinationRoot() +
               "/test/client/spec/components/boilerplate-component.spec.jsx")
             );
-            this.done();
           }
+          this.done();
         }.bind(this)
       );
     },

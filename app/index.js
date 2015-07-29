@@ -95,6 +95,17 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       });
     },
 
+    renameTest: function () {
+      // TODO: figure out a more robust method to rename this file
+      var done = this.async();
+      var msg = "renaming test/client/spec/components/boilerplate-component to test/client/spec/components/" + this.projectName + "\"";
+      this.log("\n" + chalk.cyan(msg));
+      var args = [this.destinationRoot() + "/test/client/spec/components/boilerplate-component.jsx", "./test/client/spec/components/" + this.projectName + ".jsx"];
+      this.spawnCommand("mv", args).on("exit", function () {
+        done();
+      });
+    },
+
     updateJSON: function () {
       var done = this.async();
       var msg = "Updating package.json";

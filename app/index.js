@@ -66,7 +66,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
         paths: [this.destinationRoot()],
         recursive: true,
         silent: true,
-        excludes: ["*.MD"]
+        excludes: ["*.md"]
       });
 
       replace({
@@ -80,6 +80,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
     },
 
     renameFiles: function () {
+      var done = this.async()
       var msg = "renaming files";
       this.log("\n" + chalk.cyan(msg));
       fs.rename(
@@ -91,9 +92,14 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
               this.destinationRoot() +
               "/src/components/boilerplate-component.jsx")
             );
+            done();
           }
         }.bind(this)
       );
+    },
+
+    renameTestFiles: function () {
+      var done = this.async();
       fs.rename(
         this.destinationRoot() +
         "/test/client/spec/components/boilerplate-component.spec.jsx",
@@ -104,6 +110,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
             this.log("\n" + chalk.red(this.destinationRoot() +
               "/test/client/spec/components/boilerplate-component.spec.jsx")
             );
+            this.done();
           }
         }.bind(this)
       );

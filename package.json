@@ -1,10 +1,16 @@
 {
   "name": "generator-formidable-react-component",
   "version": "0.2.1",
-  "description": "Yeoman generator",
+  "description": "React component Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "formidablelabs/generator-formidable-react-component",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FormidableLabs/generator-formidable-react-component.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FormidableLabs/generator-formidable-react-component/issues"
+  },
   "author": {
     "name": "Lauren Eastridge",
     "email": "lauren.eastridge@formidablelabs.com",
@@ -14,22 +20,32 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "lint-node": "eslint -c .eslintrc-node app",
+    "lint-node-test": "eslint --ext .js -c .eslintrc-node-test test",
+    "lint": "npm run lint-node && npm run lint-node-test",
+    "test": "mocha",
+    "check": "npm run lint && npm run test"
   },
   "files": [
     "app"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "react"
   ],
   "dependencies": {
     "chalk": "^1.0.0",
+    "js-beautify": "^1.5.10",
     "lodash": "^3.9.2",
-    "yeoman-generator": "^0.20.1",
-    "js-beautify": "1.5.10"
+    "replace": "^0.3.0",
+    "rimraf": "^2.4.2",
+    "yeoman-generator": "^0.20.1"
   },
   "devDependencies": {
-    "mocha": "*"
+    "eslint": "^0.24.1",
+    "eslint-config-defaults": "^3.1.0",
+    "eslint-plugin-filenames": "^0.1.2",
+    "mocha": "^2.2.5"
   },
   "peerDependencies": {
     "yo": ">=1.0.0"

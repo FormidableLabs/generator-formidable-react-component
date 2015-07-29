@@ -134,7 +134,6 @@ module.exports = yeoman.generators.Base.extend({
       var msg = "Updating package.json";
       this.log("\n" + chalk.cyan(msg));
 
-      // TODO(ryan): Extend.
       var jsonFile = JSON.parse(this.read(this.destinationRoot() + "/package.json"));
       jsonFile.version = "0.0.1";
       jsonFile.name = this.projectName;

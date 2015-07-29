@@ -68,4 +68,14 @@ describe("generate project", function () {
       assert.fileContent(pkg, regex);
     });
   });
+
+  it("rewrites test/client/spec/components/camel-cased-component.spec.jsx", function () {
+    var pkg = "test/client/spec/components/camel-cased-component.spec.jsx";
+    [
+      /import Component from "src\/components\/camel-cased-component";/,
+      /describe\("components\/camel-cased-component"/
+    ].forEach(function (regex) {
+      assert.fileContent(pkg, regex);
+    });
+  });
 });

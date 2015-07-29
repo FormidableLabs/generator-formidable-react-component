@@ -172,6 +172,36 @@ module.exports = yeoman.generators.Base.extend({
       }.bind(this));
     },
 
+    replaceReadme: function () {
+      if (this.victory !== true) {
+        return;
+      }
+      var done = this.async();
+      var msg = "Updating README.md";
+      this.log("\n" + chalk.cyan(msg));
+      var pkgPath = path.join(this.destinationRoot(), "README.md");
+
+      rimraf(pkgPath, function () {
+        this.template("_README.md", "README.md");
+        done();
+      }.bind(this));
+    },
+
+    replaceContributing: function () {
+      if (this.victory !== true) {
+        return;
+      }
+      var done = this.async();
+      var msg = "Updating CONTRIBUTING.md";
+      this.log("\n" + chalk.cyan(msg));
+      var pkgPath = path.join(this.destinationRoot(), "CONTRIBUTING.md");
+
+      rimraf(pkgPath, function () {
+        this.template("_CONTRIBUTING.md", "CONTRIBUTING.md");
+        done();
+      }.bind(this));
+    },
+
     install: function () {
       this.log("\n" + chalk.cyan("Installing Project Dependencies"));
       this.npmInstall();

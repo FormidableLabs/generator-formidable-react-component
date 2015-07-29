@@ -49,4 +49,23 @@ describe("generate project", function () {
     ]);
   });
 
+  it("rewrites package.json", function () {
+    var pkg = "package.json";
+    [
+      /"name": "camel-cased-component"/,
+      /"version": "0.0.1"/,
+      /"url": "https:\/\/github.com\/joe-test\/camel-cased-component.git"/
+    ].forEach(function (regex) {
+      assert.fileContent(pkg, regex);
+    });
+  });
+
+  it("rewrites src/components/camel-cased-component.jsx", function () {
+    var pkg = "src/components/camel-cased-component.jsx";
+    [
+      /export default class CamelCasedComponent extends React.Component/
+    ].forEach(function (regex) {
+      assert.fileContent(pkg, regex);
+    });
+  });
 });

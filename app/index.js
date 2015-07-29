@@ -118,6 +118,7 @@ module.exports = yeoman.generators.Base.extend({
 
       // TODO(ryan): Extend.
       var jsonFile = JSON.parse(this.read(this.destinationRoot() + "/package.json"));
+      jsonFile.version = "0.0.1";
       jsonFile.name = this.projectName;
       jsonFile.description = "";
       jsonFile.repository.url = this.git + ".git";

@@ -37,7 +37,7 @@ describe("generate project", function () {
       "webpack.config.js",
       "src/components/camel-cased-component.jsx",
       "src/index.js",
-      // TODO HERE "test/client/spec/components/camel-cased-component.jsx",
+      "test/client/spec/components/camel-cased-component.spec.jsx",
       "test/client/main.js"
 
       // **Note**: We skip the `npm install` which means `dist` isn't rebuilt and `lib` isn't built.

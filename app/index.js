@@ -5,6 +5,9 @@ var _ = require("lodash");
 var chalk = require("chalk");
 var yeoman = require("yeoman-generator");
 var beautify = require("js-beautify");
+var fs = require("fs");
+var rimraf = require("rimraf");
+var replace = require("replace");
 
 module.exports = yeoman.generators.Base.extend({
 
@@ -57,58 +60,68 @@ module.exports = yeoman.generators.Base.extend({
 
   install: {
 
-    // TODO: Do replace within the generator.
-    // https://github.com/FormidableLabs/generator-formidable-react-component/issues/11
-    installUtilites: function () {
-      var done = this.async();
-      var msg = "Installing Utilities";
+    replaceNames: function () {
+      var msg = "replacing boilerplate names";
       this.log("\n" + chalk.cyan(msg));
-      var args = ["install", "replace"];
-      this.spawnCommand("npm", args).on("exit", function () {
-        done();
+
+      replace({
+        regex: "boilerplate-component",
+        replacement: this.projectName,
+        paths: [this.destinationRoot()],
+        recursive: true,
+        silent: true,
+        excludes: ["*.md"]
+      });
+
+      replace({
+        regex: "BoilerplateComponent",
+        replacement: this.componentName,
+        paths: [this.destinationRoot()],
+        recursive: true,
+        silent: true,
+        exclude: "*.md"
       });
     },
 
-    // TODO: Do replace within the generator.
-    // https://github.com/FormidableLabs/generator-formidable-react-component/issues/11
-    renameProject: function () {
-      var done = this.async();
-      var msg = "replacing \"boilerplate-component\" with \"" + this.projectName + "\"";
-      this.log("\n" + chalk.cyan(msg));
-      var args = ["-q", "boilerplate-component", this.projectName];
-      this.spawnCommand("replace", args).on("exit", function () {
-        done();
-      });
-    },
-
-    // TODO: Do replace within the generator.
-    // https://github.com/FormidableLabs/generator-formidable-react-component/issues/11
-    renameComponent: function () {
-      var done = this.async();
-      var msg = "replacing \"BoilerplateComponent\" with \"" + this.componentName + "\"";
-      this.log("\n" + chalk.cyan(msg));
-      var args = ["-q", "BoilerplateComponent", this.componentName];
-      this.spawnCommand("replace", args).on("exit", function () {
-        done();
-      });
-    },
-
-    // TODO: figure out a more robust method to rename this file
-    // https://github.com/FormidableLabs/generator-formidable-react-component/issues/7
     renameFiles: function () {
       var done = this.async();
-      var msg = "renaming src/components/boilerplate-component to src/components/" +
-        this.projectName + "\"";
+      var msg = "renaming files";
       this.log("\n" + chalk.cyan(msg));
 
-      var args = [
-        path.join(this.destinationRoot(), "src/components/boilerplate-component.jsx"),
-        path.join(this.destinationRoot(), "src/components", this.projectName + ".jsx")
-      ];
+      fs.rename(
+        this.destinationRoot() + "/src/components/boilerplate-component.jsx",
+        this.destinationRoot() + "/src/components/" + this.projectName + ".jsx",
+        function (err) {
+          if (err) {
+            this.log("\n" + chalk.red("could not rename " +
+              this.destinationRoot() +
+              "/src/components/boilerplate-component.jsx")
+            );
+          }
+          done();
+        }.bind(this)
+      );
+    },
 
-      this.spawnCommand("mv", args).on("exit", function () {
-        done();
-      });
+    renameTestFiles: function () {
+      var done = this.async();
+      var msg = "renaming test files";
+      this.log("\n" + chalk.cyan(msg));
+
+      fs.rename(
+        this.destinationRoot() +
+        "/test/client/spec/components/boilerplate-component.spec.jsx",
+        this.destinationRoot() +
+        "/test/client/spec/components/" + this.projectName + ".spec.jsx",
+        function (err) {
+          if (err) {
+            this.log("\n" + chalk.red(this.destinationRoot() +
+              "/test/client/spec/components/boilerplate-component.spec.jsx")
+            );
+          }
+          done();
+        }.bind(this)
+      );
     },
 
     updateJSON: function () {
@@ -131,25 +144,12 @@ module.exports = yeoman.generators.Base.extend({
         indent_size: 2
         /*eslint-enable camelcase*/
       });
-
       var pkgPath = path.join(this.destinationRoot(), "package.json");
-      var args = [pkgPath];
-      this.spawnCommand("rm", args).on("exit", function () {
+
+      rimraf(pkgPath, function () {
         this.write(pkgPath, updatedJSON);
         done();
       }.bind(this));
-    },
-
-    // TODO: Do replace within the generator.
-    // https://github.com/FormidableLabs/generator-formidable-react-component/issues/11
-    uninstallUtilities: function () {
-      var done = this.async();
-      var msg = "Cleaning Up Utilities";
-      this.log("\n" + chalk.cyan(msg));
-      var args = ["uninstall", "replace"];
-      this.spawnCommand("npm", args).on("exit", function () {
-        done();
-      });
     },
 
     install: function () {

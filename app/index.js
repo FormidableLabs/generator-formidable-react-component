@@ -80,7 +80,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
     },
 
     renameFiles: function () {
-      var done = this.async()
+      var done = this.async();
       var msg = "renaming files";
       this.log("\n" + chalk.cyan(msg));
       fs.rename(
@@ -111,7 +111,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
               "/test/client/spec/components/boilerplate-component.spec.jsx")
             );
           }
-          this.done();
+          done();
         }.bind(this)
       );
     },

@@ -51,8 +51,13 @@ module.exports = yeoman.generators.Base.extend({
       "formidable-react-component-boilerplate",
       "master",
       function (err, remote) {
+        if (err) {
+          this.log("\n" + chalk.red("git remote install error: " + err));
+          return done();
+        }
+
         remote.directory(".", ".");
-        done(err);
+        done();
       },
       true // removes the cached data so boilerplate is always up to date.
     );

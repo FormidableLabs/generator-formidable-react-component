@@ -75,7 +75,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
         paths: [this.destinationRoot()],
         recursive: true,
         silent: true,
-        exclude: ["*.MD"]
+        exclude: "*.md"
       });
     },
 

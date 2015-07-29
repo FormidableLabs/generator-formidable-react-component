@@ -1,30 +1,41 @@
-/*global describe, beforeEach, it*/
-'use strict';
+"use strict";
 
-var path = require('path');
-var assert = require('yeoman-generator').assert;
-var helpers = require('yeoman-generator').test;
-var os = require('os');
+var path = require("path");
+var assert = require("yeoman-generator").assert;
+var helpers = require("yeoman-generator").test;
+var os = require("os");
 
-describe('running the generator', function () {
+describe("generate project", function () {
+
   before(function (done) {
-    helpers.run(path.join(__dirname, '../app'))
-      .inDir(path.join(os.tmpdir(), './temp-test'))
-      .withOptions({ 'skip-install': true })
-      .withPrompt({ someOption: true })
-      .on('end', done);
+
+    // HACK: Manually increase timeout until we figure out slow tests in
+    // https://github.com/FormidableLabs/generator-formidable-react-component/issues/10
+    this.timeout(10000);
+
+    helpers
+      .run(path.join(__dirname, "../app"))
+      .inDir(path.join(os.tmpdir(), "./temp-test"))
+      .withOptions({
+        "skip-install": true
+      })
+      .withPrompts({
+        inputName: "camelCasedComponent",
+        author: "Joe Test",
+        ghUser: "joe-test"
+      })
+      .on("end", done);
   });
 
-  it('creates files', function () {
+  it("creates files", function () {
     assert.file([
-      'package.json',
-      '.eslintrc',
-      '.gitignore',
-      'Gulpfile.js',
-      'karma.config.js',
-      'webpack.config.js',
-      'README.md',
-      'index.js'
+      "package.json",
+      ".eslintrc-base",
+      ".gitignore",
+      "karma.conf.js",
+      "webpack.config.js",
+      "README.md"
     ]);
   });
+
 });

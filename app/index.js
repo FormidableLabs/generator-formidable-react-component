@@ -5,7 +5,7 @@ var chalk = require("chalk");
 var yeoman = require("yeoman-generator");
 var beautify = require("js-beautify");
 
-var ReactComponentGenerator = yeoman.generators.Base.extend({
+module.exports = yeoman.generators.Base.extend({
 
   promptUser: function () {
     var done = this.async();
@@ -15,7 +15,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
     var prompts = [{
       type: "input",
       name: "inputName",
-      message: "Please name your component",
+      message: "Please name your component"
     }, {
       type: "input",
       name: "author",
@@ -23,7 +23,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
     }, {
       type: "input",
       name: "ghUser",
-      message: "What github username / organization should this package be published under?",
+      message: "What github username / organization should this package be published under?"
     }];
 
     this.prompt(prompts, function (props) {
@@ -86,10 +86,17 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
 
     renameFiles: function () {
       // TODO: figure out a more robust method to rename this file
+      // https://github.com/FormidableLabs/generator-formidable-react-component/issues/7
       var done = this.async();
-      var msg = "renaming src/components/boilerplate-component to src/components/" + this.projectName + "\"";
+      var msg = "renaming src/components/boilerplate-component to src/components/" +
+        this.projectName + "\"";
       this.log("\n" + chalk.cyan(msg));
-      var args = [this.destinationRoot() + "/src/components/boilerplate-component.jsx", "./src/components/" + this.projectName + ".jsx"];
+
+      var args = [
+        this.destinationRoot() + "/src/components/boilerplate-component.jsx",
+        "./src/components/" + this.projectName + ".jsx"
+      ];
+
       this.spawnCommand("mv", args).on("exit", function () {
         done();
       });
@@ -99,6 +106,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       var done = this.async();
       var msg = "Updating package.json";
       this.log("\n" + chalk.cyan(msg));
+
       var jsonFile = JSON.parse(this.read(this.destinationRoot() + "/package.json"));
       jsonFile.name = this.projectName;
       jsonFile.description = "";
@@ -106,7 +114,13 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       jsonFile.author = this.author;
       jsonFile.bugs.url = this.git + "/issues";
       jsonFile.homepage = this.git;
-      var updatedJSON = beautify(JSON.stringify(jsonFile), {indent_size: 2});
+
+      var updatedJSON = beautify(JSON.stringify(jsonFile), {
+        /*eslint-disable camelcase*/
+        indent_size: 2
+        /*eslint-enable camelcase*/
+      });
+
       var args = [this.destinationRoot() + "/package.json"];
       this.spawnCommand("rm", args).on("exit", function () {
         this.write(this.destinationRoot() + "/package.json", updatedJSON);
@@ -124,7 +138,7 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       });
     },
 
-    install: function() {
+    install: function () {
       this.log("\n" + chalk.cyan("Installing Project Dependencies"));
       this.npmInstall();
     }
@@ -136,5 +150,3 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
     }
   }
 });
-
-module.exports = ReactComponentGenerator;

@@ -4,6 +4,9 @@ var _ = require("lodash");
 var chalk = require("chalk");
 var yeoman = require("yeoman-generator");
 var beautify = require("js-beautify");
+var fs = require("fs");
+var rimraf = require("rimraf");
+var replace = require("replace");
 
 var ReactComponentGenerator = yeoman.generators.Base.extend({
 
@@ -54,56 +57,56 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
   },
 
   install: {
-    installUtilites: function () {
-      var done = this.async();
-      var msg = "Installing Utilities";
+    replaceNames: function () {
+      var msg = "replacing boilerplate names";
       this.log("\n" + chalk.cyan(msg));
-      var args = ["install", "replace"];
-      this.spawnCommand("npm", args).on("exit", function () {
-        done();
+      replace({
+        regex: "boilerplate-component",
+        replacement: this.projectName,
+        paths: [this.destinationRoot()],
+        recursive: true,
+        silent: true,
+        excludes: ["*.MD"]
       });
-    },
 
-    renameProject: function () {
-      var done = this.async();
-      var msg = "replacing \"boilerplate-component\" with \"" + this.projectName + "\"";
-      this.log("\n" + chalk.cyan(msg));
-      var args = ["boilerplate-component", this.projectName];
-      this.spawnCommand("replace", args).on("exit", function () {
-        done();
-      });
-    },
-
-    renameComponent: function () {
-      var done = this.async();
-      var msg = "replacing \"BoilerplateComponent\" with \"" + this.componentName + "\"";
-      this.log("\n" + chalk.cyan(msg));
-      var args = ["BoilerplateComponent", this.componentName];
-      this.spawnCommand("replace", args).on("exit", function () {
-        done();
+      replace({
+        regex: "BoilerplateComponent",
+        replacement: this.componentName,
+        paths: [this.destinationRoot()],
+        recursive: true,
+        silent: true,
+        exclude: ["*.MD"]
       });
     },
 
     renameFiles: function () {
-      // TODO: figure out a more robust method to rename this file
-      var done = this.async();
-      var msg = "renaming src/components/boilerplate-component to src/components/" + this.projectName + "\"";
+      var msg = "renaming files";
       this.log("\n" + chalk.cyan(msg));
-      var args = [this.destinationRoot() + "/src/components/boilerplate-component.jsx", "./src/components/" + this.projectName + ".jsx"];
-      this.spawnCommand("mv", args).on("exit", function () {
-        done();
-      });
-    },
-
-    renameTest: function () {
-      // TODO: figure out a more robust method to rename this file
-      var done = this.async();
-      var msg = "renaming test/client/spec/components/boilerplate-component to test/client/spec/components/" + this.projectName + "\"";
-      this.log("\n" + chalk.cyan(msg));
-      var args = [this.destinationRoot() + "/test/client/spec/components/boilerplate-component.jsx", "./test/client/spec/components/" + this.projectName + ".jsx"];
-      this.spawnCommand("mv", args).on("exit", function () {
-        done();
-      });
+      fs.rename(
+        this.destinationRoot() + "/src/components/boilerplate-component.jsx",
+        this.destinationRoot() + "/src/components/" + this.projectName + ".jsx",
+        function (err) {
+          if (err) {
+            this.log("\n" + chalk.red("could not rename " +
+              this.destinationRoot() +
+              "/src/components/boilerplate-component.jsx")
+            );
+          }
+        }.bind(this)
+      );
+      fs.rename(
+        this.destinationRoot() +
+        "/test/client/spec/components/boilerplate-component.spec.jsx",
+        this.destinationRoot() +
+        "/test/client/spec/components/" + this.projectName + ".spec.jsx",
+        function (err) {
+          if (err) {
+            this.log("\n" + chalk.red(this.destinationRoot() +
+              "/test/client/spec/components/boilerplate-component.spec.jsx")
+            );
+          }
+        }.bind(this)
+      );
     },
 
     updateJSON: function () {
@@ -119,20 +122,10 @@ var ReactComponentGenerator = yeoman.generators.Base.extend({
       jsonFile.homepage = this.git;
       var updatedJSON = beautify(JSON.stringify(jsonFile), {indent_size: 2});
       var args = [this.destinationRoot() + "/package.json"];
-      this.spawnCommand("rm", args).on("exit", function () {
+      rimraf(this.destinationRoot() + "/package.json", function () {
         this.write(this.destinationRoot() + "/package.json", updatedJSON);
         done();
       }.bind(this));
-    },
-
-    uninstallUtilities: function () {
-      var done = this.async();
-      var msg = "Cleaning Up Utilities";
-      this.log("\n" + chalk.cyan(msg));
-      var args = ["uninstall", "replace"];
-      this.spawnCommand("npm", args).on("exit", function () {
-        done();
-      });
     },
 
     install: function() {

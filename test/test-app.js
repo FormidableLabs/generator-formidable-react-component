@@ -29,12 +29,23 @@ describe("generate project", function () {
 
   it("creates files", function () {
     assert.file([
-      "package.json",
       ".eslintrc-base",
       ".gitignore",
       "karma.conf.js",
+      "package.json",
+      "README.md",
       "webpack.config.js",
-      "README.md"
+      "src/components/camel-cased-component.jsx",
+      "src/index.js",
+      // TODO HERE "test/client/spec/components/camel-cased-component.jsx",
+      "test/client/main.js"
+
+      // **Note**: We skip the `npm install` which means `dist` isn't rebuilt and `lib` isn't built.
+      // "dist/camel-cased-component.js",
+      // "dist/camel-cased-component.js.map",
+      // "dist/camel-cased-component.min.js",
+      // "dist/camel-cased-component.min.js.map",
+      // "lib/components/camel-cased-component.js",
     ]);
   });
 

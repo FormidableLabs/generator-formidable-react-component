@@ -28,6 +28,20 @@ module.exports = yeoman.generators.Base.extend({
       type: "input",
       name: "ghUser",
       message: "What github username / organization should this package be published under?"
+    }, {
+      type: "list",
+        name: "victory",
+        message: "Are you writing a Victory component?",
+        choices: [
+          {
+            name: "yes",
+            value: true
+          },
+          {
+            name: "no",
+            value: false
+          }
+        ]
     }];
 
     this.prompt(prompts, function (props) {
@@ -37,6 +51,8 @@ module.exports = yeoman.generators.Base.extend({
       this.repo = _.kebabCase(_.deburr(this.ghUser));
       this.git = "https://github.com/" + this.repo + "/" + this.projectName;
       this.destinationRoot(this.projectName);
+      this.boilerplateRepo = this.victory ?
+       "victory-component-boilerplate" : "formidable-react-component-boilerplate";
       done();
     }.bind(this));
   },
@@ -48,7 +64,7 @@ module.exports = yeoman.generators.Base.extend({
 
     this.remote(
       "formidablelabs",
-      "formidable-react-component-boilerplate",
+      this.boilerplateRepo,
       "master",
       function (err, remote) {
         if (err) {
@@ -152,6 +168,36 @@ module.exports = yeoman.generators.Base.extend({
 
       rimraf(pkgPath, function () {
         this.write(pkgPath, updatedJSON);
+        done();
+      }.bind(this));
+    },
+
+    replaceReadme: function () {
+      if (this.victory !== true) {
+        return;
+      }
+      var done = this.async();
+      var msg = "Updating README.md";
+      this.log("\n" + chalk.cyan(msg));
+      var pkgPath = path.join(this.destinationRoot(), "README.md");
+
+      rimraf(pkgPath, function () {
+        this.template("_README.md", "README.md");
+        done();
+      }.bind(this));
+    },
+
+    replaceContributing: function () {
+      if (this.victory !== true) {
+        return;
+      }
+      var done = this.async();
+      var msg = "Updating CONTRIBUTING.md";
+      this.log("\n" + chalk.cyan(msg));
+      var pkgPath = path.join(this.destinationRoot(), "CONTRIBUTING.md");
+
+      rimraf(pkgPath, function () {
+        this.template("_CONTRIBUTING.md", "CONTRIBUTING.md");
         done();
       }.bind(this));
     },

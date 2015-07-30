@@ -173,7 +173,7 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     replaceReadme: function () {
-      if (this.victory !== true) {
+      if (this.victory === true) {
         return;
       }
       var done = this.async();
@@ -188,7 +188,7 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     replaceContributing: function () {
-      if (this.victory !== true) {
+      if (this.victory === true) {
         return;
       }
       var done = this.async();

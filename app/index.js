@@ -48,7 +48,6 @@ module.exports = yeoman.generators.Base.extend({
       _.extend(this, props);
       this.componentName = _.capitalize(_.camelCase(this.inputName));
       this.projectName = _.kebabCase(_.deburr(this.inputName));
-      this.repo = _.kebabCase(_.deburr(this.ghUser));
       this.git = "https://github.com/" + this.repo + "/" + this.projectName;
       this.destinationRoot(this.projectName);
       this.boilerplateRepo = this.victory ?
@@ -90,8 +89,7 @@ module.exports = yeoman.generators.Base.extend({
         replacement: this.projectName,
         paths: [this.destinationRoot()],
         recursive: true,
-        silent: true,
-        excludes: ["*.md"]
+        silent: true
       });
 
       replace({
@@ -99,9 +97,18 @@ module.exports = yeoman.generators.Base.extend({
         replacement: this.componentName,
         paths: [this.destinationRoot()],
         recursive: true,
-        silent: true,
-        exclude: "*.md"
+        silent: true
       });
+
+      if (this.victory === true) {
+        replace({
+          regex: "/FormidableLabs/victory-component-boilerplate",
+          replacement: "/" + this.ghUser + "/" + this.projectName,
+          paths: [path.join(this.destinationRoot(), "README.md")],
+          recursive: false,
+          silent: true
+        });
+      }
     },
 
     renameFiles: function () {

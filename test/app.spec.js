@@ -80,6 +80,15 @@ describe("generate react project", function () {
       assert.fileContent(pkg, regex);
     });
   });
+
+  it("writes from the README template", function () {
+    var pkg = "README.md";
+    [
+      /This is starter react component/
+    ].forEach(function (regex) {
+      assert.fileContent(pkg, regex);
+    });
+  });
 });
 
 describe("generate victory project", function () {
@@ -105,28 +114,6 @@ describe("generate victory project", function () {
       .on("end", done);
   });
 
-  it("creates files", function () {
-    assert.file([
-      ".eslintrc-base",
-      ".gitignore",
-      "karma.conf.js",
-      "package.json",
-      "README.md",
-      "webpack.config.js",
-      "src/components/camel-cased-component.jsx",
-      "src/index.js",
-      "test/client/spec/components/camel-cased-component.spec.jsx",
-      "test/client/main.js"
-
-      // **Note**: We skip the `npm install` which means `dist` isn't rebuilt and `lib` isn't built.
-      // "dist/camel-cased-component.js",
-      // "dist/camel-cased-component.js.map",
-      // "dist/camel-cased-component.min.js",
-      // "dist/camel-cased-component.min.js.map",
-      // "lib/components/camel-cased-component.js",
-    ]);
-  });
-
   it("rewrites package.json", function () {
     var pkg = "package.json";
     [
@@ -149,13 +136,13 @@ describe("generate victory project", function () {
     });
   });
 
-  it("rewrites test/client/spec/components/camel-cased-component.spec.jsx", function () {
-    var pkg = "test/client/spec/components/camel-cased-component.spec.jsx";
+  it("DOES NOT write from the README template", function () {
+    var pkg = "README.md";
     [
-      /import Component from "src\/components\/camel-cased-component";/,
-      /describe\("components\/camel-cased-component"/
+      /This is starter react component/
     ].forEach(function (regex) {
-      assert.fileContent(pkg, regex);
+      assert.noFileContent(pkg, regex);
     });
   });
+
 });

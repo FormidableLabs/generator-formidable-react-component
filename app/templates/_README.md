@@ -1,6 +1,5 @@
 [![Travis Status][trav_img]][trav_site]
 
-
 <%= componentName %>
 ===========================
 

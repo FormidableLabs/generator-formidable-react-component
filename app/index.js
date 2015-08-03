@@ -48,7 +48,7 @@ module.exports = yeoman.generators.Base.extend({
       _.extend(this, props);
       this.componentName = _.capitalize(_.camelCase(this.inputName));
       this.projectName = _.kebabCase(_.deburr(this.inputName));
-      this.git = "https://github.com/" + this.repo + "/" + this.projectName;
+      this.git = "https://github.com/" + this.ghUser + "/" + this.projectName;
       this.destinationRoot(this.projectName);
       this.boilerplateRepo = this.victory ?
        "victory-component-boilerplate" : "formidable-react-component-boilerplate";
@@ -157,9 +157,9 @@ module.exports = yeoman.generators.Base.extend({
       var msg = "Updating package.json";
       this.log("\n" + chalk.cyan(msg));
       var jsonFile = JSON.parse(this.read(this.destinationRoot() + "/package.json"));
-      jsonFile.version = "0.0.4";
+      jsonFile.version = "0.0.1";
       jsonFile.name = this.projectName;
-      jsonFile.description = "react component";
+      jsonFile.description = this.victory ? "Victory Component" : "React Component";
       jsonFile.repository.url = this.git + ".git";
       jsonFile.author = this.author;
       jsonFile.bugs.url = this.git + "/issues";

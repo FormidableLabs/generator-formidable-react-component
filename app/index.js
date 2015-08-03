@@ -156,11 +156,10 @@ module.exports = yeoman.generators.Base.extend({
       var done = this.async();
       var msg = "Updating package.json";
       this.log("\n" + chalk.cyan(msg));
-
       var jsonFile = JSON.parse(this.read(this.destinationRoot() + "/package.json"));
-      jsonFile.version = "0.0.1";
+      jsonFile.version = "0.0.4";
       jsonFile.name = this.projectName;
-      jsonFile.description = "";
+      jsonFile.description = "react component";
       jsonFile.repository.url = this.git + ".git";
       jsonFile.author = this.author;
       jsonFile.bugs.url = this.git + "/issues";

@@ -5,7 +5,7 @@ var assert = require("yeoman-generator").assert;
 var helpers = require("yeoman-generator").test;
 var os = require("os");
 
-describe("generate project", function () {
+describe("generate react project", function () {
 
   before(function (done) {
 
@@ -22,7 +22,8 @@ describe("generate project", function () {
       .withPrompts({
         inputName: "camelCasedComponent",
         author: "Joe Test",
-        ghUser: "joe-test"
+        ghUser: "joe-test",
+        victory: false
       })
       .on("end", done);
   });
@@ -54,6 +55,7 @@ describe("generate project", function () {
     [
       /"name": "camel-cased-component"/,
       /"version": "0.0.1"/,
+      /"description": "React Component"/,
       /"url": "https:\/\/github.com\/joe-test\/camel-cased-component.git"/
     ].forEach(function (regex) {
       assert.fileContent(pkg, regex);
@@ -78,4 +80,69 @@ describe("generate project", function () {
       assert.fileContent(pkg, regex);
     });
   });
+
+  it("writes from the README template", function () {
+    var pkg = "README.md";
+    [
+      /This is starter react component/
+    ].forEach(function (regex) {
+      assert.fileContent(pkg, regex);
+    });
+  });
+});
+
+describe("generate victory project", function () {
+
+  before(function (done) {
+
+    // HACK: Manually increase timeout until we figure out slow tests in
+    // https://github.com/FormidableLabs/generator-formidable-react-component/issues/10
+    this.timeout(10000);
+
+    helpers
+      .run(path.join(__dirname, "../app"))
+      .inDir(path.join(os.tmpdir(), "./temp-test"))
+      .withOptions({
+        "skip-install": true
+      })
+      .withPrompts({
+        inputName: "camelCasedComponent",
+        author: "Joe Test",
+        ghUser: "joe-test",
+        victory: true
+      })
+      .on("end", done);
+  });
+
+  it("rewrites package.json", function () {
+    var pkg = "package.json";
+    [
+      /"name": "camel-cased-component"/,
+      /"version": "0.0.1"/,
+      /"description": "Victory Component"/,
+      /"url": "https:\/\/github.com\/joe-test\/camel-cased-component.git"/
+    ].forEach(function (regex) {
+      assert.fileContent(pkg, regex);
+    });
+  });
+
+  it("rewrites src/components/camel-cased-component.jsx", function () {
+    var pkg = "src/components/camel-cased-component.jsx";
+    [
+      /@Radium/,
+      /class CamelCasedComponent extends React.Component/
+    ].forEach(function (regex) {
+      assert.fileContent(pkg, regex);
+    });
+  });
+
+  it("DOES NOT write from the README template", function () {
+    var pkg = "README.md";
+    [
+      /This is starter react component/
+    ].forEach(function (regex) {
+      assert.noFileContent(pkg, regex);
+    });
+  });
+
 });

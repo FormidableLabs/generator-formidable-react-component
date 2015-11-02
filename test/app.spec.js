@@ -31,10 +31,8 @@ describe("generate react project", function () {
   it("creates files", function () {
     assert.file([
       ".gitignore",
-      "karma.conf.js",
       "package.json",
       "README.md",
-      "webpack.config.js",
       "src/components/camel-cased-component.jsx",
       "src/index.js",
       "test/client/spec/components/camel-cased-component.spec.jsx",

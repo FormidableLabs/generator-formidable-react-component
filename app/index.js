@@ -83,9 +83,13 @@ module.exports = yeoman.generators.Base.extend({
     replaceNames: function () {
       var msg = "replacing boilerplate names";
       this.log("\n" + chalk.cyan(msg));
+      var camelCasedName = this.victory ?
+        "VictoryComponentBoilerplate" : "FormidableReactComponentBoilerplate";
+      var kebabCasedName = this.victory ?
+        "victory-component-boilerplate" : "formidable-react-component-boilerplate";
 
       replace({
-        regex: "boilerplate-component",
+        regex: kebabCasedName,
         replacement: this.projectName,
         paths: [this.destinationRoot()],
         recursive: true,
@@ -93,7 +97,7 @@ module.exports = yeoman.generators.Base.extend({
       });
 
       replace({
-        regex: "BoilerplateComponent",
+        regex: camelCasedName,
         replacement: this.componentName,
         paths: [this.destinationRoot()],
         recursive: true,
@@ -115,15 +119,16 @@ module.exports = yeoman.generators.Base.extend({
       var done = this.async();
       var msg = "renaming files";
       this.log("\n" + chalk.cyan(msg));
-
+      var originalFile = this.victory ?
+        "victory-component-boilerplate" : "formidable-react-component-boilerplate";
       fs.rename(
-        this.destinationRoot() + "/src/components/boilerplate-component.jsx",
+        this.destinationRoot() + "/src/components/" + originalFile + ".jsx",
         this.destinationRoot() + "/src/components/" + this.projectName + ".jsx",
         function (err) {
           if (err) {
             this.log("\n" + chalk.red("could not rename " +
               this.destinationRoot() +
-              "/src/components/boilerplate-component.jsx")
+              "/src/components/" + originalFile + ".jsx")
             );
           }
           done();
@@ -135,16 +140,17 @@ module.exports = yeoman.generators.Base.extend({
       var done = this.async();
       var msg = "renaming test files";
       this.log("\n" + chalk.cyan(msg));
-
+      var originalFile = this.victory ?
+        "victory-component-boilerplate" : "formidable-react-component-boilerplate";
       fs.rename(
         this.destinationRoot() +
-        "/test/client/spec/components/boilerplate-component.spec.jsx",
+        "/test/client/spec/components/" + originalFile + ".spec.jsx",
         this.destinationRoot() +
         "/test/client/spec/components/" + this.projectName + ".spec.jsx",
         function (err) {
           if (err) {
             this.log("\n" + chalk.red(this.destinationRoot() +
-              "/test/client/spec/components/boilerplate-component.spec.jsx")
+              "/test/client/spec/components/" + originalFile + ".spec.jsx")
             );
           }
           done();

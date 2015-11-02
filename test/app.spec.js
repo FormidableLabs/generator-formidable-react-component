@@ -30,7 +30,6 @@ describe("generate react project", function () {
 
   it("creates files", function () {
     assert.file([
-      ".eslintrc-base",
       ".gitignore",
       "karma.conf.js",
       "package.json",

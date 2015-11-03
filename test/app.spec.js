@@ -126,7 +126,6 @@ describe("generate victory project", function () {
   it("rewrites src/components/camel-cased-component.jsx", function () {
     var pkg = "src/components/camel-cased-component.jsx";
     [
-      /@Radium/,
       /class CamelCasedComponent extends React.Component/
     ].forEach(function (regex) {
       assert.fileContent(pkg, regex);

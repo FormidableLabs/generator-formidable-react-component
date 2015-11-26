@@ -20,6 +20,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
+    "preversion": "npm run check",
     "lint-node": "eslint -c .eslintrc-node app",
     "lint-node-test": "eslint --ext .js -c .eslintrc-node-test test",
     "lint": "npm run lint-node && npm run lint-node-test",

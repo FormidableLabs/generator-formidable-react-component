@@ -4,7 +4,7 @@ React Component Generator
 =========================
 
 This generator creates a starter React component from Formidable Labs' freshest
-[react component boilerplate](https://github.com/FormidableLabs/formidable-react-component-boilerplate)
+[react component boilerplate](https://github.com/FormidableLabs/formidable-react-component-boilerplate) or [victory component boilerplate](https://github.com/FormidableLabs/victory-component-boilerplate). Just Follow the interactive prompts!
 
 ## Installation & Usage
 
